@@ -1,0 +1,30 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="col-lg-12"id="details-card">
+        <div class="col-lg-2">
+            <div>
+                <input type=button value="Вернуться к списку" onClick="javascript:history.go(-1);">
+            </div>
+        </div>
+        <div id="details-img" class="col-lg-4">
+            <img  src="{{ prod.img.url }}">
+        </div>
+        <div class="col-lg-4">
+            <div id="details-about">
+                <h2>{{ prod.title }}</h2>
+                {{ prod.content }}
+                <br></br>
+                <p>
+                    Категория: <a href="#" id="qv_type">{{ prod.type.name }}</a>
+                </p>
+                <p>
+                    Цена: <a href="#" id="qv_type">{{ prod.price }} тг/{{ prod.edinica }}</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    {% include 'blog/FooterPart.html' %}
+{% endblock %}

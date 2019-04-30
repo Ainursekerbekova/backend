@@ -1,0 +1,59 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="container">
+        <div class="card-header bg-dark text-light">
+            <div class="col-12 col-sm-12 col-md-2 text-center">
+                <img class="img-responsive" src="{% static 'img/keks2.png'%}" alt="prewiew" width="120" height="80">
+            </div>
+            <h2 style="padding-top: 90px; margin: 10px; text-align: center"> Мой профиль </h2>
+        </div>
+
+        <div class="card shopping-cart">
+            <div class="card-header bg-dark text-light">
+                <h2 style="padding-top: 90px; margin: 10px; text-align: center"> Мои заказы </h2>
+            </div>
+            <div class="card-body">
+                {% if orders %}
+                {% for order in orders %}
+                <div>
+                    <h2>{{ order.0.order.order_date.date }}</h2>
+                    {% for item in order %}
+                    <!-- PRODUCT -->
+                    <div class="row">
+                            <div class="col-lg-5 text-md-right">
+                                <h4 class="product-name"><strong>{{ item.prod }}</strong></h4>
+                                <h6><strong>
+                                    {{ item.quantity }}{{ item.prod.edinica}} <span class="text-muted">x</span>{{ item.prod.price }}тг
+                                </strong></h6>
+                            </div>
+                            <div class="col-lg-3 ">
+                                <h6><strong>Сумма:{{ item.get_sum}}</strong></h6>
+                            </div>
+                            <div class="col-lg-4 text-right " >
+                                Оцените: {% for i in i|rjust:5 %}
+                                <span>
+                                    <button class="fa fa-star" style="color: orange"></button>
+                                </span>
+                                {% endfor %}
+                            </div>
+                    </div>
+                    <hr>
+                    <!-- END PRODUCT -->
+                    {% endfor %}
+                    <h6><strong>Сумма Заказа:{{ orders_sum.0}}</strong></h6>
+                    <hr style="border: 2px solid">
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                    <div class="pull-right" style="margin: 15px">
+                        <h2>За все время вы купили продуктов на сумму  <b>{{all_sum}}тг</b></h2>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

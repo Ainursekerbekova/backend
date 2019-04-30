@@ -1,0 +1,16 @@
+Клиента зовут {{name}}
+
+Заказ клиента:
+
+{% for key,prod in list.items %}
+{{ prod.title }}
+{{prod.quantity}} {{ prod.ed }} х {{ prod.price }}тг
+Сумма по продукту: {{ prod.sum}}тг
+
+___________________
+{% endfor %}
+Общая сумма заказа: {{ sum}}тг
+
+
+Клиент ожидает звонка по номеру: {{ number }}
+

@@ -1,0 +1,72 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <section id="aa-popular-category">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="aa-popular-category-area">
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li><a href="{% url 'products' 'tort' 'chip'%}">Торты </a></li>
+                                <li><img class="uzor" src="{% static 'img/uzor3.png' %}"></li>
+                                <li><a href="{% url 'products' 'pirog' 'chip' %}">Пироги </a></li>
+                                <li><img class="uzor" src="{% static 'img/uzor3.png' %}"></li>
+                                <li><a href="{% url 'products' 'konfeta' 'chip' %}">Конфеты </a></li>
+                                <li><img class="uzor" src="{% static 'img/uzor3.png' %}"></li>
+                                <li><a href="{% url 'products' 'desert' 'chip' %}">Десерты </a></li>
+                                <li><img class="uzor" src="{% static 'img/uzor3.png' %}"></li>
+                                <li><a href="{% url 'products' 'domash' 'chip' %}">Домашние изделия </a></li>
+                            </ul>
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li ><a href="{% url 'products' type 'chip'%}">Сначала дешевле</a></li>
+                                <li><img class="uzor" src="{% static 'img/uzor3.png' %}"></li>
+                                <li ><a href="{% url 'products' type 'expen'%}">Сначала дороже</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Start men popular category -->
+                                <div class="tab-pane fade in active" id="popular">
+
+                                    <ul class="aa-product-catg aa-popular-slider" id="chip">
+                                        {% if prods %}
+                                            {% for prod in prods %}
+                                                <!-- start single product item -->
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img" href="#"><img src="{{ prod.img.url }}" alt="{{ prod.title }}"></a>
+                                                        {% if  not request.user.is_staff %}
+                                                            <form action="{% url 'cart'%}" method="post">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" value="{{ prod.id }}" name="id">
+                                                                <input type="submit"class="aa-add-card-btn" value="Добавить в корзину" style="width: 100%">
+                                                            </form>
+                                                        {% endif %}
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a href="#">{{ prod.title }}</a></h4>
+                                                            <span class="aa-product-price">{{ prod.price  }}/{{ prod.edinica }}</span><span class="aa-product-price"></span>
+                                                        </figcaption>
+                                                    </figure>
+                                                    <div class="aa-product-hvr-content">
+                                                        <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                        <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="container"><br>
+                                                <p class="text-danger">сори тут ничего нет</p><br>
+                                            </div>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'blog/FooterPart.html' %}
+{% endblock %}

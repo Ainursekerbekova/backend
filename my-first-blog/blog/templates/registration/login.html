@@ -1,0 +1,48 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <!-- card header banner section -->
+    <section id="aa-catg-head-banner">
+        <img src="{% static 'img/avatar2.jpg' %}" alt="fashion img">
+        <div class="aa-catg-head-banner-area">
+            <div class="container">
+                <div class="aa-catg-head-banner-content">
+                    <h2>Аккаунт</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'index' %}">Главная</a></li>
+                        <li class="active"><a href="{% url 'register' %}">Создать аккаунт</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / card header banner section -->
+
+    <!-- Card view section -->
+    <section id="aa-myaccount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-myaccount-area">
+                        <div class="aa-myaccount-register">
+                            <h2 class="title">Войти</h2>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% include 'registration/form-template.html' %}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success"> Войти </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / Card view section -->
+
+{% endblock %}
+
+
+

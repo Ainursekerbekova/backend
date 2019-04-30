@@ -1,0 +1,337 @@
+
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% block content %}
+  <!-- Start slider -->
+    <div class="my-container-slider">
+        <video autoplay loop muted="background"  controls="true" class="background-video">
+            {% for vid in video %}
+                <source src="{{vid.img.url}}"></source>
+            {% endfor %}
+        </video>
+        <img class="logo-img"src="{% static 'img/logo.png'%}">
+    </div>
+
+  <!-- / slider -->
+  <!-- Start Promo section -->
+    <section id="aa-promo">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-promo-area">
+                        <div class="row">
+                            <!-- promo left -->
+                            <div class="col-md-5 no-padding">
+                                <div class="aa-promo-left">
+                                    <div class="aa-promo-banner">
+                                        <img src="{% static 'img/torty.jpg'%}" alt="img">
+                                        <div class="aa-prom-content">
+                                            <h4><a href="{% url 'products' 'tort' 'chip'%}">Торты</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- promo right -->
+                            <div class="col-md-7 no-padding">
+                                <div class="aa-promo-right">
+                                    <div class="aa-single-promo-right">
+                                        <div class="aa-promo-banner">
+                                            <img src="{% static 'img/konfety.jpg'%}" alt="img">
+                                            <div class="aa-prom-content">
+                                                <h4><a href="{% url 'products' 'konfeta' 'chip' %}">Конфеты</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="aa-single-promo-right">
+                                        <div class="aa-promo-banner">
+                                            <img src="{% static 'img/pirogy.jpg'%}" alt="img">
+                                            <div class="aa-prom-content">
+                                                <h4><a href="{% url 'products' 'pirog' 'chip' %}">Пироги</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="aa-single-promo-right">
+                                        <div class="aa-promo-banner">
+                                            <img src="{% static 'img/deserts.jpg'%}" alt="img">
+                                            <div class="aa-prom-content">
+                                                <h4><a href="{% url 'products' 'desert' 'chip' %}">Десерты</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="aa-single-promo-right">
+                                        <div class="aa-promo-banner">
+                                            <img src="{% static 'img/manty.jpg'%}" alt="img">
+                                            <div class="aa-prom-content">
+                                                <h4><a href="{% url 'products' 'domash' 'chip' %}">Домашние изделия</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- popular section -->
+    <section id="aa-popular-category">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="aa-popular-category-area">
+                            <!-- start prduct navigation -->
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li class="active"><a href="#popular" data-toggle="tab">Popular</a></li>
+                                <li><a href="#featured" data-toggle="tab">Featured</a></li>
+                                <li><a href="#latest" data-toggle="tab">Latest</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                                <!-- Start popular category -->
+                                <div class="tab-pane fade in active" id="popular">
+                                    <ul class="aa-product-catg aa-popular-slider">
+                                {% for prod in pop %}
+                                    <!-- start single product item -->
+                                    <li>
+                                        <figure>
+                                            <a class="aa-product-img" href="#"><img src="{{ prod.img.url }}" alt="{{ prod.title }}"></a>
+                                            {% if  not request.user.is_staff %}
+                                                <form action="{% url 'cart'%}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{ prod.id }}" name="id">
+                                                    <input type="submit"class="aa-add-card-btn" value="Добавить в корзину" style="width: 100%">
+                                                </form>
+                                            {% endif %}
+                                            <figcaption>
+                                                <h4 class="aa-product-title"><a href="#">{{ prod.title }}</a></h4>
+                                                <span class="aa-product-price">{{ prod.price  }}/{{ prod.edinica }}</span><span class="aa-product-price"></span>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="aa-product-hvr-content">
+                                            <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                            <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                    </ul>
+                                </div>
+                                <!-- / popular product category -->
+
+                                <!-- start featured product category -->
+                                <div class="tab-pane fade" id="featured">
+                                    <ul class="aa-product-catg aa-featured-slider">
+                                        {% for prod in prods %}
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="#"><img src="{{ prod.img.url }}" alt="{{ prod.title }}"></a>
+                                                    {% if  not request.user.is_staff %}
+                                                        <form action="{% url 'cart'%}" method="post">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" value="{{ prod.id }}" name="id">
+                                                            <input type="submit"class="aa-add-card-btn" value="Добавить в корзину" style="width: 100%">
+                                                        </form>
+                                                    {% endif %}
+                                                    <figcaption>
+                                                        <h4 class="aa-product-title"><a href="#">{{ prod.title }}</a></h4>
+                                                        <span class="aa-product-price">{{ prod.price  }}/{{ prod.edinica }}</span><span class="aa-product-price"></span>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <!-- / featured product category -->
+
+                                <!-- start latest product category -->
+                                <div class="tab-pane fade" id="latest">
+                                    <ul class="aa-product-catg aa-latest-slider">
+                                        {% for prod in last %}
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="#"><img src="{{ prod.img.url }}" alt="{{ prod.title }}"></a>
+                                                    {% if  not request.user.is_staff %}
+                                                        <form action="{% url 'cart'%}" method="post">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" value="{{ prod.id }}" name="id">
+                                                            <input type="submit"class="aa-add-card-btn" value="Добавить в корзину" style="width: 100%">
+                                                        </form>
+                                                    {% endif %}
+                                                    <figcaption>
+                                                        <h4 class="aa-product-title"><a href="#">{{ prod.title }}</a></h4>
+                                                        <span class="aa-product-price">{{ prod.price  }}/{{ prod.edinica }}</span><span class="aa-product-price"></span>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <a class="aa-browse-btn" href="{% url 'products' 'all' 'chip'%}">Смотреть все продукты <span class="fa fa-long-arrow-right"></span></a>
+
+                                <!-- / latest product category -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- / popular section -->
+    <!-- Support section -->
+    <section id="aa-support">
+        <div class="aa-support-area">
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-hand-down "></span>
+                    <h4>Вы делаете заказ</h4>
+                    <P>Выбираете продукт и его количество</P>
+                </div>
+            </div>
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-list-alt "></span>
+                    <h4>Мы оформляем заказ </h4>
+                    <P>По вашему выбору и учитывая все ваши предпочтения</P>
+                </div>
+            </div>
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                    <h4>Наш оператор свяжется с вами</h4>
+                    <P>Для уточнения всех деталей заказа</P>
+                </div>
+            </div>
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-send"></span>
+                    <h4>К Вам отправляется курьер </h4>
+                    <P>с выбранными Вами продуктами. В среднем доставка занимает час.</P>
+                </div>
+            </div>
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-usd"></span>
+                    <h4>Оплата покупки</h4>
+                    <P>Оплата производится наличными при доставки или в фирменном магазине.</P>
+                </div>
+            </div>
+            <!-- single support -->
+            <div class="col-md-2 col-lg-2 col-xs-12">
+                <div class="aa-support-single">
+                    <span class="glyphicon glyphicon-tags"></span>
+                    <h4>Стоимость доставки</h4>
+                    <P>По городу 500тг</P>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- / Support section -->
+{% if feedback%}
+    <!-- Testimonial -->
+    <section id="aa-testimonial">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-testimonial-area">
+                        <ul class="aa-testimonial-slider">
+                            <!-- single slide -->
+                            {% for post in feedback %}
+                                <li>
+                                    <div class="aa-testimonial-single">
+                                        <img class="aa-testimonial-img" src="{% static 'img/keks2.png'%}" alt="testimonial img">
+                                        <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                        <p>{{ post.text }}</p>
+                                        <div class="aa-testimonial-info">
+                                            <p>{{ post.author }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- single slide -->
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+    <!-- / Testimonial -->
+
+
+    <!-- Subscribe section -->
+    <section id="aa-subscribe">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="aa-subscribe-area">
+                        <h3>Оставьте заявку </h3>
+                        <p>Хотите заказать эксклюзивный торт по собственной задумке или эксклюзивное изделие из шоколада?
+                            Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
+                        <form action="{% url 'mail' %} " class="aa-subscribe-form" method="get">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required >
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="idea" cols="40" rows="10" class="feed" placeholder="Ваша задумка"  required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Отправить">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="aa-subscribe-area">
+                        <h3>Отзыв </h3>
+                        <p>Хотите заказать эксклюзивный торт по собственной задумке или эксклюзивное изделие из шоколада?
+                            Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
+                        <form action="" class="aa-subscribe-form" method="post" enctype="multypart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required id="id_author">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required id="id_number">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="text" cols="40" rows="10" class="feed" placeholder="Ваше впечатление"  required id="id_text"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Отправить">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / Subscribe section -->
+
+    {% include 'blog/FooterPart.html' %}
+{% endblock %}
