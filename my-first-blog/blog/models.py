@@ -1,45 +1,44 @@
-from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
-
-class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
-
+from django.urls import reverse
+from django.conf import settings
+from django.contrib.auth.models import User
 
 class needforvideo(models.Model):
     title=models.CharField(max_length=50)
     img=models.FileField( blank=True)
+    #is_using_now=models.BooleanField(default=False)
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name="видео для главной страницы"
+        verbose_name_plural="Видео"
 
 class feedback(models.Model):
-    title=models.CharField(max_length=70)
     author = models.CharField(max_length=50)
     number = models.CharField(max_length=50)
     text = models.TextField()
+    def get_absolute_url(self):
+        return reverse('index')
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name="отзыв"
+        verbose_name_plural="Отзывы"
 
 class kolvo(models.Model):
     def __str__(self):
         return self.name
     name=models.CharField(max_length=70)
 
-
 class Type(models.Model):
+    name=models.CharField(max_length=70)
     def __str__(self):
         return self.name
-    name=models.CharField(max_length=70)
+    class Meta:
+        verbose_name="группу продуктов"
+        verbose_name_plural="Группы продуктов"
 
 
 class product(models.Model):
@@ -49,6 +48,45 @@ class product(models.Model):
     price=models.IntegerField()
     edinica=models.ForeignKey(kolvo, on_delete=models.CASCADE)
     img=models.FileField( blank=True)
-
+    created_date = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name="продукт"
+        verbose_name_plural="Продукты"
+
+
+
+class Order(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    order_date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.user.username+' '+str(self.order_date)
+    class Meta:
+        verbose_name="Заказ"
+        verbose_name_plural="Заказы"
+
+class OrderItem(models.Model):
+    prod=models.ForeignKey(product, on_delete=models.CASCADE)
+    quantity=models.IntegerField()
+    order=models.ForeignKey(Order, on_delete=models.CASCADE,default=None)
+    def __str__(self):
+        return self.prod.title+'  '+str(self.quantity)
+    def get_sum(self):
+        return self.prod.price*self.quantity
+    class Meta:
+        verbose_name="Единица заказа"
+        verbose_name_plural="Единицы заказов"
+
+
+
+
+
+
+
+
+
+
+
+
+
