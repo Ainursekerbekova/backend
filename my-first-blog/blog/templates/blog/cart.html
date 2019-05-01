@@ -29,7 +29,11 @@
                         </div>
                         <div class="col-4 col-sm-4 col-md-4">
                             <div class="quantity">
-                                <input type="number" step="1" max="99" min="1" value="{{ prod.quantity }}" title="Qty" class="qty">
+                                <form action="{% url 'change' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="to_change" value="{{ prod.id }}">
+                                    <input type="number" name="quantity" step="1" max="99" min="1" value="{{ prod.quantity }}" title="Qty" class="qty">
+                                </form>
                             </div>
                         </div>
                         <div class="col-2 col-sm-2 col-md-2 text-right">
