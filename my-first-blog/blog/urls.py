@@ -20,6 +20,9 @@ urlpatterns = [
     #Delete
     path('cart/', views.delete, name="del"),
 
+    #Change
+    path('change/', views.change, name="change"),
+
     #Buy
     path('buy/', views.buy, name="buy"),
 

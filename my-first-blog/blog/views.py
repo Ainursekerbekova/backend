@@ -20,7 +20,7 @@ from django.shortcuts import render,get_object_or_404, get_list_or_404,redirect
 #Index
 def index(request):
     needforvideos=needforvideo.objects.filter(title='my_cake')
-    feedbacks=feedback.objects.all()
+    feedbacks=feedback.objects.order_by('-id')
     if request.method == 'POST':
         form=FeedbackForm(request.POST)
         if form.is_valid():
@@ -100,11 +100,23 @@ def cart(request):
 
 #Delete
 def delete(request):
-    message=''
     cart=Cart(request)
     to_del=request.GET.get('delObj')
     prod=get_object_or_404(product,id=to_del)
     cart.remove(prod)
+    sum=cart.get_total_price()
+    cart=request.session.get('cart',{})
+    return render(request, 'blog/cart.html', {"list":cart,"sum":sum,} )
+
+
+#Change
+def change(request):
+    cart=Cart(request)
+    to_change=request.POST.get('to_change')
+    quantity=int(request.POST.get('quantity'))
+    prod=product.objects.filter(id=to_change)
+    prod=prod[0]
+    cart.add(prod,quantity,True)
     sum=cart.get_total_price()
     cart=request.session.get('cart',{})
     return render(request, 'blog/cart.html', {"list":cart,"sum":sum,} )
