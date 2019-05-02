@@ -19,11 +19,11 @@ h2 {
   background-color: #970001;  
 }
 .aa-browse-btn {
-  background-color: #970001;  
-  border: 1px solid #970001;  
+  background-color: #FA5C86;  
+  border: 1px solid #FA5C86;  
 }
 .aa-browse-btn:hover, .aa-browse-btn:focus {
-  color: #970001;
+  color: #FA5C86;
 }
 .aa-add-to-cart-btn:hover, .aa-add-to-cart-btn:focus {
   color: #970001;
