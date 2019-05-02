@@ -38,7 +38,7 @@
                                         <div class="aa-promo-banner">
                                             <img src="{% static 'img/konfety.jpg'%}" alt="img">
                                             <div class="aa-prom-content">
-                                                <h4><a href="{% url 'products' 'konfeta' 'chip' %}">Конфеты</a></h4>
+                                                <h4><a href="{% url 'products' 'konfeta' 'chip' %}">Пирожные</a></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -83,9 +83,9 @@
                         <div class="aa-popular-category-area">
                             <!-- start prduct navigation -->
                             <ul class="nav nav-tabs aa-products-tab">
-                                <li class="active"><a href="#popular" data-toggle="tab">Popular</a></li>
-                                <li><a href="#featured" data-toggle="tab">Featured</a></li>
-                                <li><a href="#latest" data-toggle="tab">Latest</a></li>
+                                <li class="active"><a href="#popular" data-toggle="tab">Популярные</a></li>
+                                <li><a href="#featured" data-toggle="tab">Хит-продаж</a></li>
+                                <li><a href="#latest" data-toggle="tab">Новинки</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -287,22 +287,14 @@
                         <h3>Оставьте заявку </h3>
                         <p>Хотите заказать эксклюзивный торт по собственной задумке или эксклюзивное изделие из шоколада?
                             Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
-                        <form action="{% url 'mail' %} " class="aa-subscribe-form" method="get">
+                        <form action="{% url 'mail' %} " class="aa-subscribe-form">
                             {% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required >
-                            </div>
-
-                            <div class="form-group">
-                                <textarea name="idea" cols="40" rows="10" class="feed" placeholder="Ваша задумка"  required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Отправить">
-                            </div>
+                            <input type="text" name="name" class="feed" placeholder="Ваше имя" required>
+                            <br>
+                            <input type="number" name="number" class="feed" placeholder="Ваш номер телефона"  required>
+                            <br>
+                            <textarea name="comment" placeholder="Ваша задумка"  class="feed" ></textarea>
+                            <input type="submit" value="Отправить">
                         </form>
                     </div>
                 </div>
@@ -313,18 +305,8 @@
                             Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
                         <form action="" class="aa-subscribe-form" method="post" enctype="multypart/form-data">
                             {% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required id="id_author">
-                            </div>
-                            <div class="form-group">
-                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required id="id_number">
-                            </div>
-                            <div class="form-group">
-                                <textarea name="text" cols="40" rows="10" class="feed" placeholder="Ваше впечатление"  required id="id_text"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Отправить">
-                            </div>
+                            {% include 'registration/form-template.html' %}
+                            <input type="submit" value="Отправить">
                         </form>
                     </div>
                 </div>

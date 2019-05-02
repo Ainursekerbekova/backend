@@ -20,7 +20,7 @@
     <!-- price picker slider -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.css' %}">
     <!-- Theme color -->
-    <link id="switcher" href="{% static 'css/theme-color/default-theme.css' %}" rel="stylesheet">
+    <link id="switcher" href="{% static 'css/theme-color/pink-theme.css' %}" rel="stylesheet">
     <!-- Top Slider CSS -->
     <link href="{% static 'css/sequence-theme.modern-slide-in.css' %}" rel="stylesheet" media="all">
 
@@ -34,13 +34,13 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-
+        <link rel="shortcut icon" href="/media/logo.ico" type="image/ico">
 </head>
 <body>
 <!-- pre loader  -->
 <div id="wpf-loader-two">
     <div class="wpf-loader-two-inner">
-        <span>Loading</span>
+        <span>Загрузка...</span>
     </div>
 </div>
 <!-- / pre loader -->
@@ -59,7 +59,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a class="aa-browse-btn" href="{% url 'index' %}" >MyCake</a></li>
+                        <li><a class="aa-browse-btn" href="{% url 'index' %}">MyCake</a></li>
                         <li><a class="aa-browse-btn" href="{% url 'products' 'all' 'chip'%}">Продукция </a></li>
                         {% if not request.user.is_staff %}
                             <li><a href="{% url 'cart'%}" class="aa-browse-btn" >Моя корзина</a></li>
@@ -84,7 +84,9 @@
                                     </div>
                             {% endif %}
                         </li>
-                        <form method="GET" action="{% url 'search' %}" role="search" id="search">
+                        <li><a class="aa-browse-btn" href="https://api.whatsapp.com/send?phone=77058833183" >Прием заказов: +77058833183</a></li>
+                        
+                        <form method="GET" action="{% url 'search' %}" role="search" id="search" style="margin-right: 20px">
                             <input  type="text" name="search" value="{{ request.GET.q }}" placeholder="Поиск">
                             <button class="" type="submit" ><i class="fa fa-search"></i></button>
                         </form>

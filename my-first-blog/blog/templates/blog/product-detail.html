@@ -22,11 +22,6 @@
                 <p>
                     Цена: <a href="#" id="qv_type">{{ prod.price }} тг/{{ prod.edinica }}</a>
                 </p>
-                <form action="{% url 'cart'%}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{ prod.id }}" name="id">
-                    <input type="submit"class="aa-add-card-btn" value="Добавить в корзину" style="width: 100%">
-                </form>
             </div>
         </div>
         <div class="col-lg-2"></div>

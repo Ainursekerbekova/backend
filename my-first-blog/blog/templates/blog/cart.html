@@ -10,90 +10,65 @@
                     Корзина</h2>
             </div>
             <div class="card-body">
+                {{ post }}
                 {% for key,prod in list.items %}
-                <!-- PRODUCT -->
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-2 text-center">
-                        <img class="img-responsive" src="{{ prod.img }}" alt="prewiew" width="120" height="80">
-                    </div>
-                    <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-                        <h4 class="product-name"><strong>{{ prod.title }}</strong></h4>
-                        <h4>
-                            <small>{{ prod.content}}</small>
-                        </h4>
-                    </div>
-                    <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-                        <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-                            <h6><strong>{{prod.quantity}}{{ prod.ed }} <span class="text-muted">x</span>{{ prod.price }}</strong></h6>
-                            <h6><strong>Сумма:{{ prod.sum}}</strong></h6>
+                    <!-- PRODUCT -->
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-2 text-center">
+                            <img class="img-responsive" src="{{ prod.img }}" alt="prewiew" width="120" height="80">
                         </div>
-                        <div class="col-4 col-sm-4 col-md-4">
-                            <div class="quantity">
-                                <form action="{% url 'change' %}" method="post" enctype="multipart/form-data">
+                        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                            <h4 class="product-name"><strong>{{ prod.title }}</strong></h4>
+                            <h4>
+                                <small>{{ prod.content}}</small>
+                            </h4>
+                        </div>
+                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                            <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+                                <h6><strong>{{prod.quantity}}{{ prod.ed }} <span class="text-muted">x</span>{{ prod.price }}</strong></h6>
+                                <h6><strong>Сумма:{{ prod.sum}}</strong></h6>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <div class="quantity">
+                                    <input type="number" step="1" max="99" min="1" value="{{ prod.quantity }}" title="Qty" class="qty">
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 text-right">
+                                <form action="{% url 'del'%}" method="get" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <input type="hidden" name="to_change" value="{{ prod.id }}">
-                                    <input type="number" name="quantity" step="1" max="99" min="1" value="{{ prod.quantity }}" title="Qty" class="qty">
+                                    <input type="hidden" name="delObj" value="{{ prod.id }}">
+                                    <button type="submit" class="btn btn-outline-danger ">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-2 col-sm-2 col-md-2 text-right">
-                            <form action="{% url 'del'%}" method="get" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <input type="hidden" name="delObj" value="{{ prod.id }}">
-                                <button type="submit" class="btn btn-outline-danger ">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </form>
-                        </div>
                     </div>
-                </div>
-                <hr>
-                <!-- END PRODUCT -->
+                    <hr>
+                    <!-- END PRODUCT -->
                 {% endfor %}
             </div>
             <div class="card-footer">
 
-                {% if list.items %}
-                <div class="text-danger row">
-                    {% if error %}
-                    <h2> Пожалуйста, <a href="{% url 'login' %}" style="color: inherit; text-decoration: underline">войдите</a> или <a href="{% url 'register' %}"  style="color: inherit; text-decoration: underline">зарегистрируйтесь</a></h2>
-                    {% endif %}
-                </div>
                 <div class="row">
-                    <div class="col-lg-6">
-                        <a href="{% url 'products' 'all' 'chip'%}" class="btn btn-block btn-info">Вернуться к покупкам</a>
+                    <div class="text-danger">
+                        <h2> {{ error }}</h2>
                     </div>
-                    <div class="col-lg-6 pull-right">
+                    <div class="pull-right" style="margin: 15px">
                         {% if sum %}
                         <h2>Total price: <b>{{ sum}}тг</b></h2>
                         {% endif %}
                     </div>
                 </div>
 
-                <div class="row" style="margin: 15px; margin-top: 20px">
-                    <br>
-                    <form action="{% url 'buy' %}" class="buy-form" method="get">
-                        <div class="row">
-                            <p>Пожалуйста введите номер телефона, чтобы наш оператор мог связаться с Вами для уточнения деталей </p>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <input type="number" name="number" class="feed" id="id_number" placeholder="Ваш номер телефона" required >
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-success btn-block">Заказать</button>
-                            </div>
-                        </div>
-                    </form>
-                    <br>
-                    <br>
-                </div>
-                {% else %}
-                    <div class="text-danger row">
-                        <h3 style="text-align: center"> Ваша корзина пуста</h3>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="{% url 'products' 'all' 'chip'%}" class="btn btn-block btn-info">Вернуться к покупкам</a>
                     </div>
-                    <a href="{% url 'products' 'all' 'chip'%}" class="btn btn-block btn-info"><h4>Вернуться к покупкам</h4></a>
-                {% endif %}
+                    <div class="col-lg-6">
+                        <a href="{% url 'buy' %}" class="btn btn-success btn-block">Заказать</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

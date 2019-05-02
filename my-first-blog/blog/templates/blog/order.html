@@ -32,26 +32,25 @@
             {% endfor %}
         </div>
         <div class="card-footer">
-            <div class="row">
-                <p>
-                    Ваш заказ находится в обработке в ближайшее время наш оператор свяжется с Вами для уточнения деталей<br>
-                    Оформить доставку вы сможете у оператора<br>
-                    Если Вы забираете заказ сами: оплата на кассе фирменного магазина<br>
-                    Если Вы заказываете доставку: оплата доставщику по прибытию<br>
-                </p>
-            </div>
 
             <div class="row">
+                <div class="text-danger">
+                    <h2> {{ error }}</h2>
+                </div>
                 <div class="pull-right" style="margin: 15px">
                     {% if sum %}
-                    <h2>Общая сумма: <b>{{ sum}}тг</b></h2>
+                    <h2>Total price: <b>{{ sum}}тг</b></h2>
                     {% endif %}
                 </div>
             </div>
 
             <div class="row">
+                <div class="col-lg-6">
                     <a href="{% url 'products' 'all' 'chip'%}" class="btn btn-block btn-info">Вернуться к покупкам</a>
-
+                </div>
+                <div class="col-lg-6">
+                    <a href="{% url 'index' %}" class="btn btn-success btn-block">Оплатить</a>
+                </div>
             </div>
         </div>
     </div>
