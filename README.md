@@ -1,2 +1,2 @@
 # backend
-homeworks for backend course 
+for backend course 
