@@ -8,26 +8,23 @@ class Cart(object):
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        self.totalsum=0
 
     def add(self, product, quantity=1, update_quantity=False):
         prod_id=str(product.id)
         if prod_id not in self.cart:
             self.cart[prod_id] = {'id':product.id,'quantity': 1,'ed':str(product.edinica), 'price': product.price, 'title':product.title,'sum':product.price,'content':product.content,'img':product.img.url}
-            self.totalsum+=product.price
         else:
             self.cart[prod_id]['quantity'] += quantity
             summa=self.cart[prod_id]['quantity']*product.price
             self.cart[prod_id]['sum']=summa
-            self.totalsum+=product.price
         if update_quantity:
             self.cart[prod_id]['quantity'] = quantity
-            self.totalsum+=product.price*quantity
+            summa=self.cart[prod_id]['quantity']*product.price
+            self.cart[prod_id]['sum']=summa
         self.save()
 
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
-        self.session['totalsum']=self.get_total_price()
         self.session.modified = True
 
     def remove(self, product):

@@ -35,6 +35,10 @@ urlpatterns = [
     #Mail
     path('mail/', views.mail, name='mail'),
 
-    #prod detail
-    path('products/<int:prod_id>/<slug:order>/<slug:l>/', views.details, name='details_old'),
+    #Admin
+    path('adminka/', views.admin, name='admin_cust'),
+
+    #Admin
+    path('adminka/chart', views.ChartData.as_view(),name="chart_data"),
+
 ]

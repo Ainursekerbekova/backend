@@ -3,10 +3,11 @@
 {% block content %}
     <div class="container">
         <div class="card-header bg-dark text-light">
-            <div class="col-12 col-sm-12 col-md-2 text-center">
+            <div class="col-lg-4 text-center img-profile">
                 <img class="img-responsive" src="{% static 'img/keks2.png'%}" alt="prewiew" width="120" height="80">
             </div>
             <h2 style="padding-top: 90px; margin: 10px; text-align: center"> Мой профиль </h2>
+            <h3 style="margin: 10px; text-align: center" >{{request.user.username}}</h3>
         </div>
 
         <div class="card shopping-cart">
@@ -29,14 +30,14 @@
                             </div>
                             <div class="col-lg-3 ">
                                 <h6><strong>Сумма:{{ item.get_sum}}</strong></h6>
-                            </div>
+                            </div> <!-- END PRODUCT
                             <div class="col-lg-4 text-right " >
                                 Оцените: {% for i in i|rjust:5 %}
                                 <span>
                                     <button class="fa fa-star" style="color: orange"></button>
                                 </span>
                                 {% endfor %}
-                            </div>
+                            </div>-->
                     </div>
                     <hr>
                     <!-- END PRODUCT -->

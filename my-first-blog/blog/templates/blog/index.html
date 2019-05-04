@@ -111,7 +111,6 @@
                                             </figcaption>
                                         </figure>
                                         <div class="aa-product-hvr-content">
-                                            <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                                             <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
                                         </div>
                                     </li>
@@ -141,7 +140,6 @@
                                                     </figcaption>
                                                 </figure>
                                                 <div class="aa-product-hvr-content">
-                                                    <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                                                     <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
                                                 </div>
                                             </li>
@@ -171,7 +169,6 @@
                                                     </figcaption>
                                                 </figure>
                                                 <div class="aa-product-hvr-content">
-                                                    <a href="{% url 'details_old' prod.id 'm' 'm'%}" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                                                     <a href="{% url 'detail' prod.id%}" ><span class="fa fa-search"></span></a>
                                                 </div>
                                             </li>
@@ -279,7 +276,7 @@
 
 
     <!-- Subscribe section -->
-    <section id="aa-subscribe">
+     <section id="aa-subscribe">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -287,14 +284,22 @@
                         <h3>Оставьте заявку </h3>
                         <p>Хотите заказать эксклюзивный торт по собственной задумке или эксклюзивное изделие из шоколада?
                             Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
-                        <form action="{% url 'mail' %} " class="aa-subscribe-form">
+                        <form action="{% url 'mail' %} " class="aa-subscribe-form" method="get">
                             {% csrf_token %}
-                            <input type="text" name="name" class="feed" placeholder="Ваше имя" required>
-                            <br>
-                            <input type="number" name="number" class="feed" placeholder="Ваш номер телефона"  required>
-                            <br>
-                            <textarea name="comment" placeholder="Ваша задумка"  class="feed" ></textarea>
-                            <input type="submit" value="Отправить">
+                            <div class="form-group">
+                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required >
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="idea" cols="40" rows="10" class="feed" placeholder="Ваша задумка"  required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Отправить">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -305,8 +310,18 @@
                             Нет ничего проще. Опишите задумку или добавьте фото с примером.</p>
                         <form action="" class="aa-subscribe-form" method="post" enctype="multypart/form-data">
                             {% csrf_token %}
-                            {% include 'registration/form-template.html' %}
-                            <input type="submit" value="Отправить">
+                            <div class="form-group">
+                                <input type="text" name="author" class="feed" placeholder="Ваше имя" maxlength="50" required id="id_author">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="number" class="feed" placeholder="Ваш номер телефона" required id="id_number">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="text" cols="40" rows="10" class="feed" placeholder="Ваше впечатление"  required id="id_text"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Отправить">
+                            </div>
                         </form>
                     </div>
                 </div>

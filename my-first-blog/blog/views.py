@@ -1,3 +1,5 @@
+import datetime
+from .Data import Data
 from .cart import Cart
 from .models import Type
 from .models import Order
@@ -8,18 +10,18 @@ from .models import OrderItem
 from .forms import FeedbackForm
 from .models import needforvideo
 from django.conf import settings
-from .forms import RegistrationForm
 from django.views.generic import View
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render,get_object_or_404, get_list_or_404,redirect
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 #Index
 def index(request):
-    needforvideos=needforvideo.objects.filter(title='my_cake')
+    needforvideos=needforvideo.objects.filter(title='beauty')
     feedbacks=feedback.objects.order_by('-id')
     if request.method == 'POST':
         form=FeedbackForm(request.POST)
@@ -29,7 +31,16 @@ def index(request):
     popular=product.objects.order_by('price')[:4]
     latest=product.objects.order_by('-created_date')[:4]
     products=product.objects.all()[:4]
-    return render(request, 'blog/index.html', {"video":needforvideos,"feedback":feedbacks,'form': forma,"pop":popular,'last':latest,'prods':products})
+    context={
+        "video":needforvideos,
+        "feedback":feedbacks,
+        'form': forma,
+        "pop":popular,
+        'last':latest,
+        'prods':products
+    }
+    return render(request, 'blog/index.html',context )
+
 
 #Mail
 def mail(request):
@@ -80,11 +91,6 @@ def products(request,type,order):
 def detail(request,prod_id):
     prod=get_object_or_404(product,id=prod_id)
     return render(request, 'blog/product-detail.html', {"prod":prod, } )
-
-
-def details(request,prod_id,order,l):
-    return render(request, 'blog/product-details.html', { } )
-
 
 #Cart
 def cart(request):
@@ -165,18 +171,6 @@ def search(request):
         context={"video":needforvideos,"feedback":feedbacks,'form': forma}
     return render(request, template,context )
 
-
-
-#def register(request):
-#    if request.method == 'POST':
-#        form=RegistrationForm(request.POST)
-#        if form.is_valid():
-#            form.save()
-#            return redirect('/accounts')
-#    else:
-#        form=RegistrationForm()
-#        return render(request, 'registration/register.html', {'form':form} )
-
 #Registration
 class UserFormView(View):
     form_class=UserForm
@@ -235,3 +229,38 @@ def profile(request):
             sum=0
     context={'orders':dict.values(),'all_sum':all_time_sum,"orders_sum":order_sum}
     return render(request, 'blog/profile.html', context )
+
+
+
+
+#AdminPage
+def admin(request):
+    return render(request, 'blog/admin.html')
+
+#AdminData
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+
+    def get(self, request):
+        myData=Data()
+        if(request.GET):
+            start_time=datetime.datetime.strptime(request.GET.get('start'), "%Y-%m-%d")
+
+            end_time=datetime.datetime.strptime(request.GET.get('end'), "%Y-%m-%d")
+        else:
+            start_time=datetime.datetime.strptime('2019-04-27T19:00:00.999Z', "%Y-%m-%dT%H:%M:%S.%fZ")
+            end_time = datetime.datetime.now()
+        myData.set_dates(start_time,end_time)
+        labels= myData.get_dates_labels()
+        defaultData=[]
+        defaultData.append(myData.get_all_orders())
+        defaultData.append(myData.get_all_products())
+        data={
+            "labels1":labels,
+            "labels2":defaultData[1][1],
+            "default1":defaultData[0],
+            "default2":defaultData[1][0]
+        }
+        return Response(data)

@@ -1,0 +1,126 @@
+{% extends 'blog/wrapper.html' %}
+{% load staticfiles %}
+{% load tz %}
+{% block content %}
+<div class="container">
+    <div class="row" >
+        <div class="card-header" style="padding-top: 90px; margin: 10px">
+            <ul class="nav nav-tabs aa-products-tab">
+                <li><h2>Статистика продаж</h2></li>
+                <li><h2><a href="http://127.0.0.1:8000/admin/" style="text-decoration: inherit">Базы данных </a></h2></li>
+            </ul>
+        </div>
+        <div style="margin: 10px">
+            <label> За какой период времени показать статистику?</label>
+        </div>
+
+        <div class="col-lg-5" style="margin: 10px">
+            <label>Дата начала</label>
+            <input id="start-date" class="feed" type="date">
+        </div>
+        <div class="col-lg-5" style="margin: 10px">
+            <label>Дата окончания</label>
+            <input id="end-date" class="feed" type="date">
+        </div>
+        <div class="col-lg-1"  style="margin: 10px">
+            <label> </label>
+            <button id="update" class="btn btn-success" style="display: block"><span class="glyphicon glyphicon-repeat"></span></button>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <canvas id="myChart1" width="400" height="400" ></canvas>
+        </div>
+        <div class="col-lg-6">
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+<script>
+    {%  block jquery  %}
+    var endpoint="chart";
+    var defaultData1=[];
+    var defaultLabels1=[];
+    var defaultData2=[];
+    var defaultLabels2=[];
+
+    $('#update').click(function () {
+        var start_date=$('#start-date').val();
+        var end_date=$('#end-date').val();
+        send_data={"start":start_date,"end":end_date};
+        $.ajax({
+            method:"GET",
+            url:endpoint,
+            data:send_data,
+            success:function (data) {
+                defaultLabels1=data.labels1;
+                defaultData1=data.default1;
+                defaultLabels2=data.labels2;
+                defaultData2=data.default2;
+                setChart()
+            },
+            error:function (error_data) {
+                console.log("error");
+                console.log(error_data);
+
+            }
+        });
+    });
+
+
+    function setChart() {
+        var ctx1 = document.getElementById('myChart1').getContext('2d');
+        var myChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: defaultLabels1,
+                datasets: [{
+                    label: 'Сумма заказов/период',
+                    data: defaultData1,
+                    backgroundColor: 'rgba(255, 0, 63, 0.7)',
+                    borderColor: 'rgba(255, 0, 63, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+        var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: defaultLabels2,
+                datasets: [{
+                    label: 'Хиты продаж за это время',
+                    data: defaultData2,
+                    backgroundColor: 'rgba(255, 0, 63, 0.7)',
+                    borderColor: 'rgba(255, 0, 63, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        })
+    }
+    {% endblock %}
+</script>

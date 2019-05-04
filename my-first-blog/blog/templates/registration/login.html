@@ -4,42 +4,44 @@
 
     <!-- card header banner section -->
     <section id="aa-catg-head-banner">
-        <img src="{% static 'img/avatar2.jpg' %}" alt="fashion img">
+        <video autoplay loop muted="background"  controls="true" class="background-video">
+            <source src="http://127.0.0.1:8000/media/video_convert-video-online.com.mp4"></source>
+        </video>
         <div class="aa-catg-head-banner-area">
-            <div class="container">
-                <div class="aa-catg-head-banner-content">
+            <div class="container" style="background-color: rgba(255,255,255,0.66);border-bottom-right-radius:15px;border-bottom-left-radius: 15px ">
                     <h2>Аккаунт</h2>
-                    <ol class="breadcrumb">
-                        <li><a href="{% url 'index' %}">Главная</a></li>
-                        <li class="active"><a href="{% url 'register' %}">Создать аккаунт</a></li>
-                    </ol>
-                </div>
+                <ul class="nav nav-tabs aa-products-tab">
+                    <li><a href="{% url 'index' %}" style="z-index: 100">Главная</a></li>
+                    <li class="active"><a href="{% url 'register' %}" style="z-index: 110;cursor: pointer">Создать аккаунт</a></li>
+                </ul>
             </div>
         </div>
     </section>
     <!-- / card header banner section -->
 
     <!-- Card view section -->
-    <section id="aa-myaccount">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="aa-myaccount-area">
-                        <div class="aa-myaccount-register">
-                            <h2 class="title">Войти</h2>
-                            <form action="" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {% include 'registration/form-template.html' %}
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success"> Войти </button>
-                                </div>
-                            </form>
-                        </div>
+<section id="aa-myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="aa-myaccount-area" style="margin-top:30px ">
+                    <div class="aa-myaccount-register" style="border: none; padding: 30px;border-radius: 15px; background-color: rgba(255,255,255,0.66)">
+                        <h2 class="title">Войти</h2>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% include 'registration/form-template.html' %}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success"> Войти </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+            <div class="col-md-2"></div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- / Card view section -->
 
 {% endblock %}

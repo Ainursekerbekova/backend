@@ -15,12 +15,12 @@
                                 <div class="aa-footer-widget">
                                     
                                     <ul class="aa-footer-nav">
-                                        <li><a href="#">Главная</a></li>
-                                        <li><a href="#">Торты</a></li>
-                                        <li><a href="#">Пироги</a></li>
-                                        <li><a href="#">Конфеты</a></li>
-                                        <li><a href="#">Десерты</a></li>
-                                        <li><a href="#">Домашние изделия</a></li>
+                                        <li><a href="{% url 'index' %}">Главная</a></li>
+                                        <li><a href="{% url 'products' 'tort' 'chip'%}">Торты</a></li>
+                                        <li><a href="{% url 'products' 'pirog' 'chip' %}">Пироги</a></li>
+                                        <li><a href="{% url 'products' 'konfeta' 'chip' %}">Конфеты</a></li>
+                                        <li><a href="{% url 'products' 'desert' 'chip' %}">Десерты</a></li>
+                                        <li><a href="{% url 'products' 'domash' 'chip' %}">Домашние изделия</a></li>
                                     </ul>
                                 </div>
                             </div>
