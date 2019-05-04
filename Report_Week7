@@ -1,0 +1,11 @@
+--------------------------Report for week 7----------------------------------
+
+
+On the header we added the search option. 
+
+Also we made popular and new products which works by counting number of orders 
+and by watching the data of adding product by admin.
+
+
+And the video on the front side is loaded from the database,not from the link.
+Also if you want to change the video on the front you simply may add it to the database from administration panel.

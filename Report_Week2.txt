@@ -1,0 +1,13 @@
+Report 24.03
+
+We have made front-end with bootstrap support.
+So that all of the information is on the main screen. 
+Exactly menu of the products, featured and latest products, and feedbacks from customers. 
+
+Firstly, we added the video from the store on the front page under the logo. 
+Then our customer wanted us to make the menu consisting of five categories. 
+And each product should have it's description and cost for one piece and kilogram.
+
+
+Till the next meeting we need to provide this  to the client for approval
+
