@@ -62,6 +62,13 @@ class Order(models.Model):
     order_date = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.user.username+' '+str(self.order_date)
+    def get_sum(self):
+        items=OrderItem.objects.filter(order=self.id)
+        sum=0
+        for item in items:
+            sum+=item.get_sum()
+        return sum
+
     class Meta:
         verbose_name="Заказ"
         verbose_name_plural="Заказы"
