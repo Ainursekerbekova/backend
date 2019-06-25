@@ -5,8 +5,8 @@ Was sold for 50K тг
 
 
 This project includes:
-Statistic charts
-Sending emails with 'callback' and 'new order'
-Cart with funcionality
-Database managing
+Statistic charts, 
+Sending emails with 'callback' and 'new order', 
+Cart with funcionality, 
+Database managing, 
 Beaty frontend)
